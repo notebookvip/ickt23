@@ -1,0 +1,53 @@
+*{
+	margin: 0;
+	padding: 0;
+	/*box-sizing 在需要的时候使用*/
+	/*兼容谷歌低版本*/
+	/*-webkit-box-sizing: border-box;*/
+	/*兼容火狐低版本*/
+    /*-moz-box-sizing: border-box;
+    box-sizing: border-box;*/
+}
+
+/*:before,*/
+/*:after {*/
+    /*-webkit-box-sizing: border-box;*/
+    /*-moz-box-sizing: border-box;*/
+    /*box-sizing: border-box;*/
+/*}*/
+
+li{
+	list-style: none;
+}
+
+a{
+	text-decoration: none;
+	color: black;
+}
+
+img{
+	vertical-align: middle;
+}
+
+h1 {font-size: 24px;}
+h2 {font-size: 20px;}
+h3 {font-size: 18px;}
+h4 {font-size: 16px;}
+h5 {font-size: 14px;}
+h6 {font-size: 12px;}
+h1, h2, h3, h4, h5, h6{font-weight: normal;}
+i, em{ font-style: normal;}
+
+input,{
+	border: 0;
+	outline: 0;
+	background: none;
+}
+
+.clear:after{
+	display: block;
+	height: 0;
+	content: "";
+	clear: both;
+	visibility: hidden;
+}
