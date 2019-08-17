@@ -1,4 +1,4 @@
-//Game整个游戏类
+﻿//Game整个游戏类
 //ctx画笔
 //bird鸟的实例
 //pipe管子的实例
@@ -523,4 +523,5 @@ Game.prototype.check = function(){
 Game.prototype.gameOver = function(){
 	//清楚定时器
 	clearInterval(this.timer);
+              alert('O(∩_∩)O哈哈~撞到啦');
 }
