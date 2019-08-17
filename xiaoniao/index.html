@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			canvas{
+				display: block;
+				margin: 0 auto;
+				border: 1px solid blue;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="360" height="512"></canvas>
+		<script src="js/Background.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/Bird.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/Game.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/Pipe.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			//游戏分析
+			//当前游戏就是一只鸟不停的穿越管子，同时管子和背景（远处的山和底面）向后撤，地面和管子的移动速度是相同的
+			//远处的山移动速度稍慢一些
+			//当鼠标点击的时候，小鸟要不断的上升与下降去穿越管子，如果碰到上下管子则游戏结束
+			
+			//继续分析
+			//当前游戏可以分为几个类？
+			//我们使用面向对象的方式进行书写
+			//鸟类，管子类，背景类（山和底面），游戏类
+			
+			
+			//当前游戏需要很多图片，所需要的图片有
+			//['images/bg_day.png','images/bird0_0.png','images/bird0_1.png','images/bird0_2.png','images/land.png','images/pipe_down.png','images/pipe_up.png'];
+			
+			//定义数组容器，用于存储所有图片
+			var imgArr = ['images/bg_day.png','images/bird0_0.png','images/bird0_1.png','images/bird0_2.png','images/land.png','images/pipe_down.png','images/pipe_up.png'];
+			//console.log(imgArr);
+			//想要封装一个函数，接收两个参数，第一个参数是图片数组
+			//第二个参数是回调函数，当所有图片加载完毕之后执行
+			
+			
+			//loadImage 用于加载图片方法 
+			//imgArr  图片数组
+			//callBack  回调函数
+			
+			function loadImage(imgArr,callBack){
+				//定义信号量
+				var idx = 0;
+				//定义图片数组容器
+				var loadImageArr = [];
+				
+				//遍历加载所有图片
+				imgArr.forEach(function(item,index){
+					//创建图片元素
+					var img = new Image();
+					
+					//设置图片路径
+					img.src = item;
+					
+					//为了确保图片加载完毕，设置load事件
+					img.onload = function(){
+						//每加载一张图片，让信号量改变
+						idx++;
+						
+						//每加载一张图片就存储到数组中
+						//图片的加载对应数组的索引
+						loadImageArr[index] = img;
+						
+						//判断信号量与数组中的长度
+						if(idx === imgArr.length){
+							//说明加载完毕
+							callBack(loadImageArr);
+						}
+						
+					}
+						
+				})
+				
+			}
+			
+			
+			
+			//图片加载完毕了，执行回调函数
+			//使用方法 
+			loadImage(imgArr,function(img_arr){
+				//console.log('图片加载完毕，回调函数执行');
+				//获取元素
+				var canvas = document.getElementById('myCanvas');
+				//获取画笔
+				var ctx = canvas.getContext('2d');
+				
+				//初始化Bird类
+                var bird = new Bird(img_arr.slice(1,4),100,100);
+                
+				//初始化Pipe类
+				var pipe = new Pipe(img_arr[5],img_arr[6],4,360);
+				
+				//初始化Background类【山
+				var mountain = new Background(img_arr[0],2,0,0);
+				
+				//初始化Background类【底面
+				var land = new Background(img_arr[4],4,0,400);
+				
+				
+			
+				
+				//开始游戏
+				window.g = new Game(ctx,bird,pipe,land,mountain);
+				
+			});
+			
+			
+		</script>
+	</body>
+</html>
